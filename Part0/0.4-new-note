@@ -25,7 +25,7 @@ browser executes the event handler
 that renders notes to display
 end note
 
-browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+browser->server: HTTP POST {note: 123 123}
 
 note over browser:
 browser reloads the page and shows the submitted message
