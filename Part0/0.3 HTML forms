@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+f<!DOCTYPE html>
 <html lang="en-US">
   <head>
     <meta charset="utf-8">
-    <title>My test page</title>
+    <title>My very first HTML form page</title>
   </head>
   <body>
     <form action="/my-handling-form-page" method="post">
@@ -24,7 +24,5 @@
         </li>
       </ul>
     </form>
-
-    <p>This is my page</p>
   </body>
 </html>
