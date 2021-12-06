@@ -1,11 +1,6 @@
-import { SetValue } from "./SetValue"
-
-const Button = (props) => {
+const Button = ({ Clicks, text }) => {
     return(
-    <button onClick={SetValue(props.func, props.value + 1)}>
-        {props.name}
-    </button>
+    <button onClick={Clicks}>{text}</button>
     )
-  
 }
 export {Button}

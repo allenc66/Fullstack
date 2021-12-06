@@ -16,12 +16,12 @@ const Statistics = (props) => {
       <div>
         <table>
             <tbody>
-            <Statisticline text = 'good' value ={good} />
-            <Statisticline text = 'neutral' value ={neutral} />
-            <Statisticline text = 'bad' value ={bad} />
-            <Statisticline text = 'all' value ={all} />
-            <Statisticline text = 'average' value ={(good-bad)/all} />
-            <Statisticline text = 'positive' value ={String(good/all *100) + ' %'} />
+            <Statisticline name = {'good'} value ={good} />
+            <Statisticline name = {'neutral'} value ={neutral} />
+            <Statisticline name = {'bad'} value ={bad} />
+            <Statisticline name = {'all'} value ={all} />
+            <Statisticline name = {'average'} value ={(good-bad)/all} />
+            <Statisticline name = {'positive'} value ={String(good/all *100) + ' %'} />
             </tbody>
         </table>
       </div>

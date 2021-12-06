@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+
 const Title = (props) => {
     return(
         
@@ -40,12 +42,12 @@ const Title = (props) => {
       <div>
         <table>
             <tbody>
-            <Statisticline name = 'good' value ={good} />
-            <Statisticline name = 'neutral' value ={neutral} />
-            <Statisticline name = 'bad' value ={bad} />
-            <Statisticline name = 'all' value ={all} />
-            <Statisticline name = 'average' value ={(good-bad)/all} />
-            <Statisticline name = 'positive' value ={String(good/all *100) + ' %'} />
+            <Statisticline name = {'good'} value ={good} />
+            <Statisticline name = {'neutral'} value ={neutral} />
+            <Statisticline name = {'bad'} value ={bad} />
+            <Statisticline name = {'all'} value ={all} />
+            <Statisticline name = {'average'} value ={(good-bad)/all} />
+            <Statisticline name = {'positive'} value ={String(good/all *100) + ' %'} />
             </tbody>
         </table>
       </div>
@@ -62,6 +64,7 @@ const Title = (props) => {
   
     const goodClick = () => {
       setGood(good + 1)
+      console.log (good + 1)
     }
     
     const neutralClick = () => {
@@ -84,3 +87,4 @@ const Title = (props) => {
       </div>
     )
   }
+  export default App;
