@@ -1,10 +1,10 @@
 const Total = ({exercises}) => {
-    const NewArr = exercises.map((element) => element.exercises)
+    console.log(exercises)
+    const NewArr = exercises.map((course) => course.exercises)
     const total = NewArr.reduce((res,cur) => res + cur)
-    console.log(NewArr)
-    return (
-        <p>Total of {total} exercises </p>
-    )
-}
+    return <p style={{fontWeight: "bold"}}>total of {total} exercises </p> 
+        }
+        
+    
 
 export {Total}
