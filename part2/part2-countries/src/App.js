@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { FindCountries } from './components/findCountries'
-import { Form } from './components/Form'
+import { TooManyMatches } from './components/TooManyMatches'
 
 
 const App =() => {
+  const[filter, setFilter] = useState('')
   const[countries, setCountries] = useState([])
-  const handleCountries= (event) => {
-    console.log(event.target.value)
-    setCountries(event.target.value)
-  }
-  axios
-  .get('https://restcountries.com/v3.1/all')
-  .then(response => {
-    const notes = response.data
-      console.log(notes)
-    })
+  
 
+  useEffect(() => {
+    axios.get('https://restcountries.com/v3.1/all').then((response) => {
+        setCountries(response.data)
+    })
+  },[])
+   //console.log(countries)
+
+   const countriesToShow = countries.filter(country => country.name.common.toLowerCase().includes(filter.toLowerCase()))
+   //console.log(countriesToShow)
   return (
-    <div>
-        <FindCountries filter={countries} handlefilter= {handleCountries}/>
-        <Form filter={countries} countries={notes}/>
-    </div>
+      <div>
+        find countries <input value={filter} onChange={e => setFilter(e.target.value)}/>
+        <TooManyMatches countriesToShow={countriesToShow} setcountriestoShow={setFilter} /> 
+      </div>
   )
 }
+
+
+
 
 export default App;
