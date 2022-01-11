@@ -9,7 +9,7 @@ const Contacts = (props) => {
         </p>)) 
         : props.persons.map((person) => (
         <p key={person.id}>
-            {person.name} {person.number} 
+            {person.name} {person.number} <button onClick={() => props.deletePerson(person.id, person.name)}>delete</button>
         </p>))
 
         }
