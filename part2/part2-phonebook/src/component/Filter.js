@@ -2,7 +2,7 @@
 const Filter = (props) => {
 
     return (
-        <input value={props.filter} onChange={props.handlefilter}/>
+        <>filter shown with <input value={props.filter} onChange={props.handlefilter}/></>
     )
 }
 

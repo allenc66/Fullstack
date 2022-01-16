@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Contacts } from './component/Contacts'
 import { Filter } from './component/Filter'
 import { AddNewPerson } from './component/AddNewPerson'
+import { Notification } from './component/Notification'
 import axios from 'axios'
 import phonebook from './service/phonebook'
 
@@ -10,6 +11,7 @@ const App = () => {
   const[newName, setNewName] = useState('')
   const[newNumber, setNewNumber] = useState('')
   const[filter, setFilter] = useState('')
+  const[notification, setNotification] = useState (null)
   useEffect(() => {
     //console.log('effect')
     phonebook.getAll().then((initialData)=> {
@@ -46,6 +48,20 @@ const App = () => {
         setPersons(persons.map((person)=>
         person.id !== oldPerson.id ? person : updatedPerson
         ))
+        setNotification(
+          `Changed number for ${newName}`
+        )
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
+      })
+      .catch(error => {
+        setNotification(
+          `Information of ${newName} has already been removed from server`
+        )
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
       })
       setNewName('') 
       setNewNumber('') 
@@ -57,6 +73,14 @@ const App = () => {
       phonebook.create(personObject).then((addedObject) => {
         setPersons(persons.concat(addedObject))
       })
+
+      setNotification(
+        `Added ${newName}`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+      
     }
     //console.log(persons)
     setNewName('')
@@ -82,8 +106,7 @@ const App = () => {
   const handleDelete = (id,name) => {
     //console.log(id,name)
     window.confirm(`Delete ${name}?`)  //for template string use ```` NOT ''''
-    axios.delete(`http://localhost:3001/persons/${id}`)
-    .then(() => {
+    phonebook.remove(id).then(() => {
       const newPersons = persons.filter((item) => item.id !== id)
       setPersons(newPersons)
     })
@@ -96,9 +119,10 @@ const App = () => {
   return (
   <div>
     <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Filter filter= {filter} handlefilter= {handlefilter}/>
 
-    <h2>add a new contact</h2>
+    <h2>Add a new contact</h2>
     
     <AddNewPerson 
       addName={addName}
