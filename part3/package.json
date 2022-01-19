@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Matti Luukkainen",
+  "author": "Allenc66",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.2"
