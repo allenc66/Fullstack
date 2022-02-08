@@ -8,7 +8,7 @@ if (process.argv.length < 3) {
 const password = process.argv[2]
 //console.log(password)
 
-const url = `mongodb+srv://fullstack:fullstack123@cluster0.qwll6.mongodb.net/phonebook?retryWrites=true&w=majority`
+const url = `mongodb+srv://fullstack:password@cluster0.qwll6.mongodb.net/phonebook?retryWrites=true&w=majority`
 
 mongoose.connect(url)
 
