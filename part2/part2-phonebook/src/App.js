@@ -19,7 +19,7 @@ const App = () => {
       setPersons(initialData)
     })
   },[])
-  console.log('render', persons.length, 'persons')
+  //console.log('render', persons.length, 'persons')
 
   const addName = (event) => {
     event.preventDefault()
@@ -27,15 +27,20 @@ const App = () => {
     const personObject = 
       {name: newName, number: newNumber, id: persons.length + 1} // it is an Object, not a list
     
-    console.log(personObject)
+    //console.log(personObject)
 
     const isNumberPresent = persons.find((element) => element.number === newNumber)
     const personToChange = persons.some((element) => element.name === newName)
     const oldPerson = persons.find((element) => element.name === newName)
     const newPerson = {...oldPerson, number: newNumber}
     
+    if (!newName || !newNumber){
+      setNewName('') 
+      setNewNumber('')
+      return alert(`Missing information, please input a name and a number`) 
 
-    if (isNumberPresent && oldPerson){
+    }
+    else if (isNumberPresent && oldPerson){
       setNewName('') 
       setNewNumber('') 
       //console.log(newNumber)
@@ -43,7 +48,7 @@ const App = () => {
     }
 
     else if (personToChange){
-      window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)&&
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
       phonebook.update(oldPerson.id, newPerson).then((updatedPerson) => {
         setPersons(persons.map((person)=>
         person.id !== oldPerson.id ? person : updatedPerson
@@ -66,7 +71,7 @@ const App = () => {
       setNewName('') 
       setNewNumber('') 
       //console.log(newName)
-    }
+    }}
     // if statement has to follow the order of processing, otherwise it will not execute this step
   
     else{
