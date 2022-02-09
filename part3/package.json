@@ -6,16 +6,25 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../phonebook/ && npm run build && cp -r build ../",
+    "deploy": "git push heroku main",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "author": "Allenc66",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
-    "morgan": "^1.10.0"
+    "mongoose": "^6.1.10",
+    "morgan": "^1.10.0",
+    "static": "^2.0.0"
   },
   "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-plugin-react": "^7.28.0",
     "nodemon": "^2.0.15"
   }
 }
