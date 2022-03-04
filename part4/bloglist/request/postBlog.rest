@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsbGVuMTIzIiwiaWQiOiI2MjIyNGU4YzczNDQ5ZmQ5MGM2Y2ZkZTMiLCJpYXQiOjE2NDY0MzI3ODF9.mUHFQujiLcUrdbF4kGAJCnMvWK5Ru-iWiBY1weLxwBs
+
+{
+    "title": "ABCDEFG",
+    "author": "Micheal Jordan",
+    "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+    "likes": 5
+  }
