@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "nodemon index.js",
+    "dev": "react-scripts dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -38,7 +38,8 @@
     ]
   },
   "proxy": "http://localhost:3003",
-  "devDependencies": {
+  "npm uninstall": {
+    "nodemo": "^1.0.0",
     "nodemon": "^2.0.15"
   }
 }
