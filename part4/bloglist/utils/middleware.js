@@ -45,13 +45,19 @@ const requestLogger = (request, response, next) => {
 
   const userExtractor = async (request, response, next) => {
     const authorization = request.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+      const decodedToken = jwt.verify(authorization.substring(7), process.env.SECRET)
+      if (decodedToken) {
+        request.user = await User.findById(decodedToken.id)
+      }
+    }
+   /* const authorization = await request.get('authorization')
     const decodedToken = jwt.verify( authorization.substring(7), process.env.SECRET)
-
     const user = await User.findById(decodedToken.id)
     
     authorization && authorization.toLowerCase().startsWith('bearer ')
     ? (request.user = user)
-    : (request.user = null)
+    : (request.user = null)*/ //(the above part is not working) Because "authorization" value could be null，jwt.verify (null) causing app crash
 
     next()
 
