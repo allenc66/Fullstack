@@ -71,6 +71,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
+  
     try{
       const user =  await axios.post(`http://localhost:3001/api/login`, {username, password})
 
@@ -79,8 +80,8 @@ const App = () => {
         password
       })*/ //this is not working
 
-      console.log(user)
-      console.log(user.data.name)
+      //console.log(user)
+      //console.log(user.data.name)
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user)) 
       blogService.setToken(user.data.token)
       setUser(user)
@@ -132,7 +133,7 @@ const App = () => {
 
   return (
     <div>
-       <h2>Blog11</h2>
+       <h2>Blog App</h2>
       {user && (
         <div>
           {user.data.name} is logged in
@@ -141,17 +142,23 @@ const App = () => {
       )}  
        
       <div>
-        {user === null ? loginForm()
+        {user === null ? (loginForm())
         :(
           <>
-          {blogForm()}
-          <div>
-          {blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          blogUpdate={blogUpdate}
-          blogRemove={blogRemove}/>
+            {blogForm()}
+            <div>
+            {blogs
+              .sort((min, max) => min.likes - max.likes)
+              .filter((blog) => blog.user.username === user.data.username)
+              .map((blog) => (  
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  blogUpdate={blogUpdate}
+                  blogRemove={blogRemove}
+                />),
+         // console.log(blogs),
+          //console.log(user.data.username) OMG , forget the data
         )}
           </div>
           </>
