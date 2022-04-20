@@ -10,27 +10,24 @@ const Blog = ({blog, blogUpdate, blogRemove}) => {
     window.confirm(`Delete ${blog.title} by ${blog.author}?`) &&
     blogRemove(blog.id)
   }
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+  
   return(
-    <div style={blogStyle}>
-      <div>
-        {blog.title} BY {blog.author}
+    <div className='blog-container'>
+      <div className='blogTitle'>
+        <strong>{blog.title}</strong> BY <strong>{blog.author}</strong>
       </div> 
 
       <Togglable buttonLabel='view' cancelButtonLabel='hide'>
-        <div>{blog.url}</div>
-        <div>{blog.likes}
-        <button onClick={likeHandler}>like</button>
-        </div>
-        <div>{blog.user.name}
+        <p>{blog.url}</p>
+        <p className='likeContainer'>
+          {blog.likes}
+        <button className='likeButton' onClick={likeHandler}>
+          Like
+          </button>
+        </p>
+        <p>{blog.user.name}</p>
         <button onClick={removeHandler}>Remove</button>
-        </div>
+        
       </Togglable>
    </div>
   
