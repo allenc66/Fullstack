@@ -18,10 +18,11 @@
     "dev": "react-scripts dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
-  "eslintConfig": {
-  },
+  "eslintConfig": {},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -34,9 +35,12 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:3002",
   "npm uninstall": {
     "nodemo": "^1.0.0",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "cypress": "^9.5.4"
   }
 }

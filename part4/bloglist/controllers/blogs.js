@@ -26,10 +26,10 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
         const body = request.body
         const user = request.user
         const decodedToken = jwt.verify(request.token, process.env.SECRET)
-        if (!decodedToken.id){
-          return response.status(401),json({error: 'token missing or invalid'})
+        if (!request.token ||!decodedToken.id){
+          return response.status(401).json({error: 'token missing or invalid'})
         }
-          if(body.title === undefined){
+         /* if(body.title === undefined){
             return response.status(400).send({
               error: 'title is missing'
             })
@@ -43,7 +43,7 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
             return response.status(400).send({
               error: 'url is missing'
             })
-          }
+          }*/
           else{
             const blog = new Blog({
               title: body.title,
@@ -53,9 +53,14 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
               user: user.id
             })
         const savedBlog = await blog.save()
+        //console.log(savedBlog)
+        //console.log(user)
         user.blogs = user.blogs.concat(savedBlog.id)
         await user.save()
-        response.status(201).json(savedBlog)
+
+       const populatedBlog = await savedBlog.populate('user', { username: 1, name: 1 }).execPopulate()
+
+        response.status(200).json(populatedBlog.toJSON())
         }
       })
 

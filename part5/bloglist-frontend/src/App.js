@@ -14,9 +14,11 @@ const App = () => {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [loginVisible, setLoginVisible] = useState(false)
-  const [Notification, setNotification] = useState("")
+  const [notificationText, setNotificationText] = useState("")
+  const [notificationStyle, setNotificationStyle] = useState("notification")
   const [Toggle, setToggle] = useState(false)
 
+  const BlogFormRef = useRef()
 
   useEffect(() => {
     const Data = async () => {
@@ -27,7 +29,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -40,21 +42,24 @@ const App = () => {
     if (blogObject.title !== '' && blogObject.author !== '' && blogObject.url !== '') {
       const newBlog =  await blogService.create(blogObject)
       setBlogs(blogs.concat(newBlog))
-      setNotification(`A new blog ${blogObject.title} by ${blogObject.author} is added`)
+      setNotificationStyle('notification')
+      setNotificationText(`A new blog ${blogObject.title} by ${blogObject.author} is added`)
       setToggle(!Toggle)
       setTimeout(() => {
         setToggle(false)
       }, 5000)
+      setBlogs('')
+      console.log(blogObject)
+      document.location.reload()
     } else {
-      setNotification('You must fill all fields to create a blog')
+      setNotificationStyle('Warning')
+      setNotificationText('You must fill all fields to create a blog')
       setToggle(!Toggle)
       setTimeout(() => {
         setToggle(false)
       }, 5000)
   }
 }
-
-  const BlogFormRef = useRef()
 
   const blogUpdate = async (blogId, blogObject) => {
     await blogService.update(blogId, blogObject)
@@ -73,7 +78,7 @@ const App = () => {
     event.preventDefault()
   
     try{
-      const user =  await axios.post(`http://localhost:3001/api/login`, {username, password})
+      const user =  await axios.post(`http://localhost:3002/api/login`, {username, password})
 
       /*const user = await loginService.login({
         username, 
@@ -81,15 +86,24 @@ const App = () => {
       })*/ //this is not working
 
       //console.log(user)
-      //console.log(user.data.name)
-      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user)) 
+      
+      window.localStorage.setItem('loggedBlogUser', JSON.stringify(user)) 
       blogService.setToken(user.data.token)
+      //console.log(user.data.token)
       setUser(user)
       setUsername('')
       setPassword('')
-      setNotification(`User ${user.data.name} is logged in`)
+      setNotificationStyle('notification')
+      setNotificationText(`User ${user.data.name} is logged in`)
+      setToggle(!Toggle)
+      setTimeout(() => {
+        setToggle(false)
+      }, 5000)
+
+      //console.log(Notification)
     } catch (exception) {
-      setNotification('Wrong username or password')
+      setNotificationStyle('Warning')
+      setNotificationText('Wrong username or password')
       setToggle(!Toggle)
       setTimeout(() => {
         setToggle(false)
@@ -99,12 +113,12 @@ const App = () => {
   //console.log(user)
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogAppUser')
+    window.localStorage.removeItem('loggedBlogUser')
     document.location.reload()
   }
 
   const blogForm = () => (
-    <Togglable buttonLabel='new blog' cancelButtonLabel="Cancel" ref={BlogFormRef}>
+    <Togglable buttonLabel='New Blog' cancelButtonLabel="Cancel" ref={BlogFormRef}>
       <BlogForm createBlog={addBlog} />  
     </Togglable>
   )
@@ -133,14 +147,17 @@ const App = () => {
 
   return (
     <div>
-       <h2>Blog App</h2>
+       <h2>Blog List</h2>
+       
       {user && (
         <div>
           {user.data.name} is logged in
         <button onClick={handleLogout}>Logout</button>
       </div>
       )}  
-       
+       {Toggle && (
+       <Notification text={notificationText} style={notificationStyle}/>
+       )}
       <div>
         {user === null ? (loginForm())
         :(
@@ -165,6 +182,7 @@ const App = () => {
         )
         }
       </div>
+      <p><strong>App created by CMY</strong></p>
     </div>
   )
 }
